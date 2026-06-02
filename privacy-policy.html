@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chính sách Bảo mật — MathUp</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.7;
+      padding: 0 16px 64px;
+    }
+    header {
+      background: #FF6B35;
+      color: #fff;
+      padding: 40px 24px 32px;
+      margin: 0 -16px 40px;
+    }
+    header h1 { font-size: 1.8rem; font-weight: 700; }
+    header p  { margin-top: 6px; opacity: .85; font-size: .95rem; }
+    main { max-width: 720px; margin: 0 auto; }
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FF6B35;
+      margin: 36px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #ffe8de;
+    }
+    p  { margin-bottom: 10px; }
+    ul { padding-left: 20px; margin-bottom: 10px; }
+    li { margin-bottom: 6px; }
+    a  { color: #FF6B35; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .card {
+      background: #fff8f5;
+      border: 1px solid #ffe8de;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-top: 10px;
+    }
+    .updated { font-size: .85rem; color: #888; margin-top: 4px; }
+    footer { margin-top: 60px; text-align: center; font-size: .82rem; color: #999; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Chính sách Bảo mật</h1>
+  <p>MathUp Mobile — Thi đấu Toán học 1v1</p>
+</header>
+
+<main>
+  <p class="updated">Cập nhật lần cuối: 02/06/2026</p>
+
+  <p style="margin-top:16px">
+    MathUp Mobile ("chúng tôi", "ứng dụng") tôn trọng quyền riêng tư của bạn.
+    Chính sách này giải thích dữ liệu nào chúng tôi thu thập, mục đích sử dụng,
+    và quyền của bạn đối với dữ liệu đó.
+  </p>
+
+  <!-- 1 -->
+  <h2>1. Dữ liệu chúng tôi thu thập</h2>
+  <ul>
+    <li><strong>Tài khoản:</strong> địa chỉ email và mật khẩu (được mã hóa bởi Supabase Auth)</li>
+    <li><strong>Hồ sơ:</strong> tên hiển thị, ảnh đại diện (tùy chọn, do bạn tải lên)</li>
+    <li><strong>Dữ liệu trò chơi:</strong> lịch sử trận đấu, điểm số, thứ hạng, EXP, cấp độ</li>
+    <li><strong>Nhiệm vụ hàng ngày:</strong> tiến trình và trạng thái hoàn thành nhiệm vụ</li>
+  </ul>
+  <p>Chúng tôi <strong>không</strong> thu thập: vị trí GPS, danh bạ, lịch sử duyệt web,
+  hay bất kỳ dữ liệu thiết bị nhạy cảm nào khác.</p>
+
+  <!-- 2 -->
+  <h2>2. Mục đích sử dụng dữ liệu</h2>
+  <ul>
+    <li>Xác thực và bảo vệ tài khoản của bạn</li>
+    <li>Hiển thị bảng xếp hạng và thống kê cá nhân</li>
+    <li>Theo dõi tiến trình học tập và phần thưởng EXP</li>
+    <li>Cải thiện tính năng và trải nghiệm của ứng dụng</li>
+  </ul>
+  <p>Chúng tôi <strong>không</strong> bán, cho thuê hay chia sẻ dữ liệu của bạn
+  cho bên thứ ba vì mục đích quảng cáo.</p>
+
+  <!-- 3 -->
+  <h2>3. Dịch vụ bên thứ ba</h2>
+  <div class="card">
+    <p><strong>Supabase</strong> (<a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a>)</p>
+    <p>Chúng tôi dùng Supabase để lưu trữ dữ liệu và xác thực người dùng.
+    Dữ liệu được lưu trên máy chủ Supabase (AWS) và được bảo vệ bằng mã hóa
+    TLS khi truyền tải và AES-256 khi lưu trữ.</p>
+  </div>
+
+  <!-- 4 -->
+  <h2>4. Lưu trữ và bảo mật dữ liệu</h2>
+  <ul>
+    <li>Dữ liệu được lưu trữ trên máy chủ đám mây được bảo vệ bởi Supabase</li>
+    <li>Mật khẩu được băm (bcrypt) — chúng tôi không bao giờ thấy mật khẩu thực của bạn</li>
+    <li>Kết nối ứng dụng ↔ máy chủ được mã hóa bằng HTTPS/TLS</li>
+    <li>Dữ liệu tài khoản được xóa vĩnh viễn khi bạn yêu cầu xóa tài khoản</li>
+  </ul>
+
+  <!-- 5 -->
+  <h2>5. Quyền của bạn</h2>
+  <ul>
+    <li><strong>Truy cập:</strong> xem dữ liệu cá nhân trong phần Hồ sơ và Thống kê</li>
+    <li><strong>Chỉnh sửa:</strong> cập nhật tên hiển thị và ảnh đại diện bất cứ lúc nào</li>
+    <li><strong>Xóa tài khoản:</strong> liên hệ email bên dưới để yêu cầu xóa toàn bộ dữ liệu.
+      Chúng tôi sẽ xử lý trong vòng 30 ngày.</li>
+    <li><strong>Rút lại đồng ý:</strong> ngừng sử dụng ứng dụng và yêu cầu xóa tài khoản</li>
+  </ul>
+
+  <!-- 6 -->
+  <h2>6. Trẻ em</h2>
+  <p>Ứng dụng phù hợp cho mọi lứa tuổi. Nếu người dùng dưới 13 tuổi, cha mẹ
+  hoặc người giám hộ có thể liên hệ chúng tôi để quản lý hoặc xóa tài khoản.</p>
+
+  <!-- 7 -->
+  <h2>7. Thay đổi chính sách</h2>
+  <p>Nếu chính sách này thay đổi đáng kể, chúng tôi sẽ thông báo trong ứng dụng.
+  Việc tiếp tục sử dụng sau ngày cập nhật đồng nghĩa với việc bạn chấp nhận
+  chính sách mới.</p>
+
+  <!-- 8 -->
+  <h2>8. Liên hệ</h2>
+  <div class="card">
+    <p>Mọi câu hỏi hoặc yêu cầu xóa tài khoản, vui lòng liên hệ:</p>
+    <p style="margin-top:8px">
+      📧 <a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a>
+    </p>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 MathUp Mobile. Tất cả quyền được bảo lưu.</p>
+</footer>
+</body>
+</html>
