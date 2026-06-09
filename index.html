@@ -3,860 +3,782 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Điều khoản &amp; Chính sách — MathUp Mobile</title>
+  <title>Điều khoản &amp; Chính sách — MathUp</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --orange:   #FF6B35;
-      --orange-lt:#FFF0E8;
-      --orange-bd:#FFD4BC;
-      --text:     #1C1C1E;
-      --muted:    #6C6C70;
-      --border:   #E5E5EA;
-      --bg:       #F2F2F7;
+      --black:      #1d1d1f;
+      --gray-dark:  #424245;
+      --gray-mid:   #6e6e73;
+      --gray-light: #86868b;
+      --gray-rule:  #d2d2d7;
+      --gray-bg:    #f5f5f7;
+      --white:      #ffffff;
+      --link:       #0066cc;
+      --link-hover: #0077ed;
+
+      --nav-w: 240px;
+      --content-max: 700px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                   "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 15px;
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
       line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Header ── */
-    .header {
-      background: var(--orange);
-      color: #fff;
-      padding: 48px 24px 36px;
-      text-align: center;
+    /* ── Top bar ── */
+    .topbar {
+      height: 48px;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--gray-rule);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .header .badge {
-      display: inline-block;
-      background: rgba(255,255,255,.2);
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-size: .78rem;
+    .topbar-brand {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -.01em;
+    }
+    .topbar-sep { color: var(--gray-rule); margin: 0 10px; font-size: 20px; font-weight: 200; }
+    .topbar-section { font-size: 15px; color: var(--gray-mid); }
+
+    /* ── Layout shell ── */
+    .shell {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      align-items: flex-start;
+    }
+
+    /* ── Sidebar nav ── */
+    .sidebar {
+      width: var(--nav-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 64px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      padding: 40px 0 60px;
+    }
+    .sidebar::-webkit-scrollbar { width: 0; }
+
+    .nav-group { margin-bottom: 32px; }
+    .nav-group-label {
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: .06em;
       text-transform: uppercase;
-      margin-bottom: 14px;
+      color: var(--gray-light);
+      padding: 0 0 8px;
+      display: block;
     }
-    .header h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; }
-    .header p  { margin-top: 8px; opacity: .85; font-size: .95rem; }
-    .header .meta {
-      margin-top: 18px;
-      font-size: .82rem;
-      opacity: .75;
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    /* ── Sticky tab bar ── */
-    .tabs {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 12px;
-      flex-wrap: wrap;
-    }
-    .tabs a {
+    .nav-group ul { list-style: none; }
+    .nav-group li { line-height: 1; }
+    .nav-group a {
+      display: block;
+      font-size: 13px;
+      color: var(--gray-dark);
       text-decoration: none;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: .9rem;
-      padding: 8px 18px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      transition: all .15s ease;
+      padding: 6px 0;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+      margin-left: -12px;
+      transition: color .15s, border-color .15s;
     }
-    .tabs a:hover { color: var(--orange); border-color: var(--orange-bd); background: var(--orange-lt); }
-
-    /* ── Layout ── */
-    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 16px 80px; }
-
-    /* Anchor target offset so the sticky bar doesn't cover the heading */
-    .doc { scroll-margin-top: 64px; }
-    .doc + .doc { margin-top: 56px; }
-
-    .doc-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .nav-group a:hover { color: var(--link); }
+    .nav-group a.active { color: var(--link); border-left-color: var(--link); font-weight: 500; }
+    .nav-doc-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+      display: block;
+      padding: 0 0 10px;
     }
-    .doc-sub { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
+    .nav-doc-link:hover { color: var(--link); }
 
-    /* ── Table of contents ── */
-    .toc {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px 24px;
-      margin-bottom: 28px;
+    /* ── Main content ── */
+    .content {
+      flex: 1;
+      min-width: 0;
+      padding: 56px 0 120px 60px;
+      max-width: var(--content-max);
     }
-    .toc-title {
-      font-weight: 700;
-      font-size: .82rem;
+
+    /* ── Doc block ── */
+    .doc { margin-bottom: 88px; }
+    .doc + .doc { padding-top: 16px; border-top: 1px solid var(--gray-rule); }
+
+    .doc-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .07em;
       text-transform: uppercase;
-      letter-spacing: .08em;
-      color: var(--muted);
-      margin-bottom: 12px;
+      color: var(--gray-light);
+      margin-bottom: 10px;
     }
-    .toc ol { padding-left: 18px; }
-    .toc li { margin-bottom: 4px; }
-    .toc a  { color: var(--orange); text-decoration: none; font-size: .9rem; }
-    .toc a:hover { text-decoration: underline; }
+    .doc-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -.025em;
+      line-height: 1.1;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+    .doc-meta {
+      font-size: 13px;
+      color: var(--gray-light);
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--gray-rule);
+    }
 
-    /* ── Section card ── */
+    /* ── Summary box ── */
+    .summary {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 44px;
+    }
+    .summary-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      margin-bottom: 8px;
+    }
+    .summary p { font-size: 14px; color: var(--gray-dark); line-height: 1.65; }
+
+    /* ── Section ── */
     .section {
-      background: #fff;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 28px 28px 24px;
-      margin-bottom: 20px;
+      padding-bottom: 36px;
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--gray-rule);
       scroll-margin-top: 72px;
     }
-    .section-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
+    .section:last-of-type { border-bottom: none; }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      color: var(--black);
       margin-bottom: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
     }
     .section-num {
-      flex-shrink: 0;
-      width: 32px; height: 32px;
-      background: var(--orange);
-      color: #fff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: .88rem;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray-light);
+      min-width: 24px;
     }
-    h2 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.3;
-      padding-top: 4px;
-    }
-    h3 {
-      font-size: .92rem;
-      font-weight: 700;
-      color: var(--orange);
-      margin: 20px 0 8px;
-    }
-    p  { margin-bottom: 10px; color: var(--text); }
-    p:last-child { margin-bottom: 0; }
-    ul, ol { padding-left: 20px; margin-bottom: 10px; }
-    li { margin-bottom: 6px; }
-    strong { font-weight: 600; }
 
-    /* ── Info box ── */
-    .infobox {
-      background: var(--orange-lt);
-      border: 1px solid var(--orange-bd);
-      border-radius: 10px;
-      padding: 16px 18px;
-      margin: 12px 0;
-      font-size: .9rem;
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      margin: 24px 0 8px;
+      letter-spacing: -.005em;
     }
-    .infobox-label {
-      font-weight: 700;
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      color: var(--orange);
-      margin-bottom: 6px;
+
+    p { font-size: 15px; color: var(--gray-dark); margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol { padding-left: 22px; margin-bottom: 12px; }
+    li { font-size: 15px; color: var(--gray-dark); margin-bottom: 6px; line-height: 1.65; }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--link-hover); }
+    strong { font-weight: 600; color: var(--black); }
+
+    /* ── Note / callout ── */
+    .note {
+      border-left: 3px solid var(--gray-rule);
+      padding: 12px 16px;
+      margin: 18px 0;
+      border-radius: 0 6px 6px 0;
+      background: var(--gray-bg);
     }
+    .note p { font-size: 14px; margin: 0; }
 
     /* ── Data table ── */
-    .data-table {
+    .tbl-wrap { overflow-x: auto; margin: 16px 0; }
+    table {
       width: 100%;
       border-collapse: collapse;
-      font-size: .88rem;
-      margin: 12px 0;
+      font-size: 13.5px;
     }
-    .data-table th {
-      background: var(--bg);
-      text-align: left;
-      padding: 10px 12px;
-      font-weight: 700;
-      font-size: .78rem;
+    thead th {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
       text-transform: uppercase;
-      letter-spacing: .05em;
-      color: var(--muted);
-      border-bottom: 2px solid var(--border);
+      color: var(--gray-light);
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-rule);
+      white-space: nowrap;
     }
-    .data-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
+    tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--gray-rule);
+      color: var(--gray-dark);
       vertical-align: top;
+      line-height: 1.6;
     }
-    .data-table tr:last-child td { border-bottom: none; }
+    tbody tr:last-child td { border-bottom: none; }
 
     /* ── Rights grid ── */
     .rights-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 16px;
     }
     .right-item {
-      background: var(--bg);
+      background: var(--gray-bg);
       border-radius: 10px;
-      padding: 12px 14px;
-      font-size: .88rem;
+      padding: 14px 16px;
     }
-    .right-item .icon { font-size: 1.3rem; margin-bottom: 4px; }
-    .right-item strong { display: block; font-size: .82rem; color: var(--orange); }
-
-    /* ── Contact card ── */
-    .contact-card {
-      background: var(--orange);
-      color: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      margin-top: 12px;
-    }
-    .contact-card a { color: #fff; font-weight: 600; }
-    .contact-card .row { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; }
-
-    /* ── Divider between the two documents ── */
-    .doc-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 8px 0 0;
-    }
-
-    /* ── Back to top ── */
-    .backtop {
-      display: inline-block;
-      margin-top: 14px;
-      font-size: .85rem;
-      color: var(--orange);
-      text-decoration: none;
+    .right-item .r-title {
+      font-size: 13px;
       font-weight: 600;
+      color: var(--black);
+      margin-bottom: 4px;
     }
-    .backtop:hover { text-decoration: underline; }
+    .right-item .r-desc {
+      font-size: 12.5px;
+      color: var(--gray-mid);
+      line-height: 1.5;
+    }
+
+    /* ── Contact block ── */
+    .contact-block {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-top: 14px;
+    }
+    .contact-block .cb-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+    .contact-block .cb-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--gray-dark);
+    }
+    .contact-block .cb-row:last-child { margin-bottom: 0; }
+    .contact-block .cb-label {
+      min-width: 130px;
+      color: var(--gray-light);
+      font-size: 13px;
+    }
 
     /* ── Footer ── */
     footer {
-      text-align: center;
-      font-size: .82rem;
-      color: var(--muted);
-      margin-top: 40px;
-      padding-bottom: 20px;
+      border-top: 1px solid var(--gray-rule);
+      padding: 28px 24px;
+      font-size: 12px;
+      color: var(--gray-light);
+      line-height: 1.8;
     }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 24px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .footer-copy { font-size: 12px; color: var(--gray-light); }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { font-size: 12px; color: var(--gray-light); text-decoration: none; }
+    .footer-links a:hover { color: var(--link); text-decoration: underline; }
 
     /* ── Responsive ── */
-    @media (max-width: 540px) {
-      .section { padding: 20px 16px; }
-      .data-table th, .data-table td { padding: 8px; font-size: .82rem; }
+    @media (max-width: 760px) {
+      .sidebar { display: none; }
+      .content { padding: 36px 0 80px; }
+      .shell { padding: 0 18px; }
+      .doc-title { font-size: 26px; }
+      .section-heading { font-size: 18px; }
       .rights-grid { grid-template-columns: 1fr 1fr; }
-      .tabs a { padding: 7px 14px; font-size: .84rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body id="top">
 
-<!-- ═══════════════════════ HEADER ═══════════════════════ -->
-<div class="header">
-  <div class="badge">Terms &amp; Privacy</div>
-  <h1>Điều khoản &amp; Chính sách</h1>
-  <p>MathUp Mobile — Thi đấu Toán học 1v1</p>
-  <div class="meta">
-    <span>📅 Cập nhật: 05/06/2026</span>
-    <span>🌐 Áp dụng: Android &amp; iOS</span>
-  </div>
-</div>
+<!-- Top bar -->
+<header class="topbar">
+  <span class="topbar-brand">MathUp</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-section">Pháp lý</span>
+</header>
 
-<!-- ═══════════════════════ TAB BAR ═══════════════════════ -->
-<nav class="tabs">
-  <a href="#terms">📄 Điều khoản dịch vụ</a>
-  <a href="#privacy">🔒 Chính sách bảo mật</a>
-</nav>
+<div class="shell">
 
-<div class="wrap">
+  <!-- Sidebar -->
+  <nav class="sidebar" aria-label="Điều hướng trang pháp lý">
 
-  <!-- ════════════════════════════════════════════════════════════════════ -->
-  <!-- ════════════════════  DOC 1 — ĐIỀU KHOẢN DỊCH VỤ  ═══════════════════ -->
-  <!-- ════════════════════════════════════════════════════════════════════ -->
-  <div class="doc" id="terms">
-    <div class="doc-title">📄 Điều khoản Dịch vụ</div>
-    <div class="doc-sub">Có hiệu lực: 05/06/2026 · Phiên bản 1.0</div>
-
-    <div class="toc">
-      <div class="toc-title">Mục lục</div>
-      <ol>
+    <div class="nav-group">
+      <a class="nav-doc-link" href="#terms">Điều khoản Dịch vụ</a>
+      <ul>
         <li><a href="#t1">Chấp nhận điều khoản</a></li>
         <li><a href="#t2">Mô tả dịch vụ</a></li>
-        <li><a href="#t3">Điều kiện sử dụng &amp; độ tuổi</a></li>
+        <li><a href="#t3">Độ tuổi &amp; điều kiện</a></li>
         <li><a href="#t4">Tài khoản người dùng</a></li>
-        <li><a href="#t5">Quy tắc ứng xử &amp; chơi công bằng</a></li>
-        <li><a href="#t6">Nội dung trò chuyện &amp; biểu cảm</a></li>
-        <li><a href="#t7">Điểm, EXP và vật phẩm ảo</a></li>
-        <li><a href="#t8">Quyền sở hữu trí tuệ</a></li>
+        <li><a href="#t5">Quy tắc &amp; chơi công bằng</a></li>
+        <li><a href="#t6">Nội dung trò chuyện</a></li>
+        <li><a href="#t7">Điểm, EXP &amp; vật phẩm ảo</a></li>
+        <li><a href="#t8">Sở hữu trí tuệ</a></li>
         <li><a href="#t9">Quyền riêng tư</a></li>
-        <li><a href="#t10">Tạm ngưng &amp; chấm dứt tài khoản</a></li>
-        <li><a href="#t11">Miễn trừ trách nhiệm &amp; giới hạn</a></li>
+        <li><a href="#t10">Tạm ngưng &amp; chấm dứt</a></li>
+        <li><a href="#t11">Miễn trừ trách nhiệm</a></li>
         <li><a href="#t12">Thay đổi điều khoản</a></li>
         <li><a href="#t13">Luật áp dụng &amp; liên hệ</a></li>
-      </ol>
-    </div>
-
-    <div class="infobox">
-      <div class="infobox-label">Tóm tắt</div>
-      MathUp là trò chơi thi đấu toán học 1v1 miễn phí. Bằng việc sử dụng ứng dụng,
-      bạn đồng ý chơi công bằng (không gian lận, không quấy rối), giữ tài khoản an
-      toàn, và tôn trọng người chơi khác. Điểm và EXP chỉ có giá trị trong trò chơi,
-      không quy đổi thành tiền.
-    </div>
-
-    <div class="section" id="t1">
-      <div class="section-header"><div class="section-num">1</div><h2>Chấp nhận điều khoản</h2></div>
-      <p>
-        Bằng việc tạo tài khoản, đăng nhập hoặc sử dụng ứng dụng MathUp Mobile
-        (sau đây gọi là "<strong>Ứng dụng</strong>" hoặc "<strong>Dịch vụ</strong>"),
-        bạn xác nhận đã đọc, hiểu và đồng ý chịu ràng buộc bởi các Điều khoản Dịch vụ
-        này cùng <a href="#privacy">Chính sách Bảo mật</a> của chúng tôi.
-      </p>
-      <p>
-        Nếu bạn <strong>không đồng ý</strong> với bất kỳ phần nào của các điều khoản,
-        vui lòng không sử dụng Ứng dụng.
-      </p>
-    </div>
-
-    <div class="section" id="t2">
-      <div class="section-header"><div class="section-num">2</div><h2>Mô tả dịch vụ</h2></div>
-      <p>
-        MathUp là ứng dụng giáo dục cho phép người dùng thi đấu giải toán 1v1 theo
-        thời gian thực, theo dõi thống kê, leo bảng xếp hạng và hoàn thành nhiệm vụ
-        hàng ngày. Dịch vụ được cung cấp <strong>miễn phí</strong>.
-      </p>
-      <p>
-        Chúng tôi có thể cập nhật, bổ sung hoặc ngừng một số tính năng bất cứ lúc nào
-        nhằm cải thiện trải nghiệm. Một số tính năng yêu cầu kết nối Internet ổn định.
-      </p>
-    </div>
-
-    <div class="section" id="t3">
-      <div class="section-header"><div class="section-num">3</div><h2>Điều kiện sử dụng &amp; độ tuổi</h2></div>
-      <p>MathUp phù hợp cho mọi lứa tuổi và được thiết kế cho mục đích học tập.</p>
-      <ul>
-        <li>Người dùng dưới <strong>16 tuổi</strong> cần có sự đồng ý và giám sát của
-          cha mẹ hoặc người giám hộ hợp pháp khi sử dụng Ứng dụng.</li>
-        <li>Cha mẹ / người giám hộ chịu trách nhiệm về hoạt động của trẻ trong Ứng dụng
-          và có quyền yêu cầu quản lý hoặc xóa tài khoản của trẻ.</li>
-        <li>Bạn cam kết các thông tin cung cấp khi đăng ký là chính xác và thuộc về bạn.</li>
       </ul>
     </div>
 
-    <div class="section" id="t4">
-      <div class="section-header"><div class="section-num">4</div><h2>Tài khoản người dùng</h2></div>
+    <div class="nav-group">
+      <a class="nav-doc-link" href="#privacy">Chính sách Bảo mật</a>
       <ul>
-        <li>Bạn chịu trách nhiệm giữ bí mật thông tin đăng nhập và mọi hoạt động diễn ra
-          dưới tài khoản của mình.</li>
-        <li>Thông báo cho chúng tôi ngay nếu phát hiện tài khoản bị truy cập trái phép.</li>
-        <li>Mỗi người chỉ nên sử dụng tài khoản của chính mình; không mua bán, cho thuê
-          hoặc chuyển nhượng tài khoản.</li>
-        <li>Bạn có thể yêu cầu xóa tài khoản bất cứ lúc nào theo hướng dẫn tại
-          <a href="#privacy">Chính sách Bảo mật</a>.</li>
-      </ul>
-    </div>
-
-    <div class="section" id="t5">
-      <div class="section-header"><div class="section-num">5</div><h2>Quy tắc ứng xử &amp; chơi công bằng</h2></div>
-      <p>Khi sử dụng MathUp, bạn <strong>không được</strong>:</p>
-      <ul>
-        <li>Gian lận bằng bot, script tự động, công cụ giải toán bên ngoài, hoặc khai thác
-          lỗi để giành lợi thế không công bằng;</li>
-        <li>Can thiệp, dịch ngược, tấn công hoặc cố gắng truy cập trái phép vào hệ thống,
-          máy chủ hay dữ liệu của người dùng khác;</li>
-        <li>Tạo nhiều tài khoản nhằm thao túng bảng xếp hạng hoặc nhiệm vụ;</li>
-        <li>Quấy rối, đe dọa, lăng mạ hoặc phân biệt đối xử với người chơi khác;</li>
-        <li>Gửi spam, quảng cáo, hoặc nội dung trái pháp luật Việt Nam.</li>
-      </ul>
-      <div class="infobox">
-        <div class="infobox-label">Lưu ý</div>
-        Vi phạm các quy tắc trên có thể dẫn đến việc đặt lại điểm, khóa tính năng,
-        hoặc chấm dứt tài khoản mà không cần báo trước (xem Mục 10).
-      </div>
-    </div>
-
-    <div class="section" id="t6">
-      <div class="section-header"><div class="section-num">6</div><h2>Nội dung trò chuyện &amp; biểu cảm</h2></div>
-      <p>
-        Trong trận đấu, người chơi có thể gửi tin nhắn nhanh và biểu cảm (emoji).
-        Bạn tự chịu trách nhiệm về nội dung mình gửi.
-      </p>
-      <ul>
-        <li>Hệ thống áp dụng giới hạn tần suất và bộ lọc ngôn từ không phù hợp.</li>
-        <li>Chúng tôi có quyền lọc, ẩn hoặc xử lý nội dung vi phạm mà không cần báo trước.</li>
-        <li>Nghiêm cấm nội dung thù ghét, khiêu dâm, bạo lực, hoặc xâm phạm quyền người khác.</li>
-      </ul>
-    </div>
-
-    <div class="section" id="t7">
-      <div class="section-header"><div class="section-num">7</div><h2>Điểm, EXP và vật phẩm ảo</h2></div>
-      <p>
-        Điểm xếp hạng, điểm kinh nghiệm (EXP), cấp độ, huy hiệu và phần thưởng nhiệm vụ
-        là <strong>vật phẩm ảo</strong> chỉ có giá trị trong phạm vi Ứng dụng.
-      </p>
-      <ul>
-        <li>Chúng <strong>không</strong> có giá trị tiền tệ và không thể quy đổi, mua bán
-          hay chuyển nhượng thành tiền hoặc tài sản thực.</li>
-        <li>Chúng tôi có thể điều chỉnh công thức tính điểm/EXP để cân bằng trò chơi.</li>
-        <li>Điểm thu được do gian lận có thể bị thu hồi.</li>
-      </ul>
-    </div>
-
-    <div class="section" id="t8">
-      <div class="section-header"><div class="section-num">8</div><h2>Quyền sở hữu trí tuệ</h2></div>
-      <p>
-        Toàn bộ mã nguồn, thiết kế, giao diện, logo, nội dung câu hỏi và tài sản của
-        MathUp Mobile thuộc quyền sở hữu của nhà phát triển và được bảo vệ theo pháp luật.
-      </p>
-      <p>
-        Bạn được cấp quyền sử dụng cá nhân, phi thương mại, không độc quyền và có thể bị
-        thu hồi đối với Ứng dụng. Bạn không được sao chép, phân phối, chỉnh sửa hoặc khai
-        thác thương mại bất kỳ phần nào của Ứng dụng nếu không có sự cho phép bằng văn bản.
-      </p>
-    </div>
-
-    <div class="section" id="t9">
-      <div class="section-header"><div class="section-num">9</div><h2>Quyền riêng tư</h2></div>
-      <p>
-        Việc thu thập và xử lý dữ liệu cá nhân của bạn được mô tả chi tiết trong
-        <a href="#privacy">Chính sách Bảo mật</a>, là một phần không tách rời của các Điều
-        khoản này. Bằng việc sử dụng Ứng dụng, bạn đồng ý với cách chúng tôi xử lý dữ liệu
-        như đã nêu tại đó.
-      </p>
-    </div>
-
-    <div class="section" id="t10">
-      <div class="section-header"><div class="section-num">10</div><h2>Tạm ngưng &amp; chấm dứt tài khoản</h2></div>
-      <p>Chúng tôi có thể tạm ngưng hoặc chấm dứt quyền truy cập của bạn nếu:</p>
-      <ul>
-        <li>Bạn vi phạm các Điều khoản này hoặc pháp luật hiện hành;</li>
-        <li>Hành vi của bạn gây hại cho người chơi khác hoặc hệ thống;</li>
-        <li>Theo yêu cầu của cơ quan nhà nước có thẩm quyền.</li>
-      </ul>
-      <p>
-        Bạn có thể ngừng sử dụng và yêu cầu xóa tài khoản bất cứ lúc nào. Một số dữ liệu
-        có thể được lưu giữ theo thời hạn nêu trong Chính sách Bảo mật hoặc theo yêu cầu
-        của pháp luật.
-      </p>
-    </div>
-
-    <div class="section" id="t11">
-      <div class="section-header"><div class="section-num">11</div><h2>Miễn trừ trách nhiệm &amp; giới hạn</h2></div>
-      <p>
-        Ứng dụng được cung cấp "<strong>như hiện có</strong>" và "<strong>theo khả năng
-        sẵn có</strong>". Trong phạm vi pháp luật cho phép:
-      </p>
-      <ul>
-        <li>Chúng tôi không bảo đảm Dịch vụ luôn không gián đoạn, không lỗi, hoặc luôn
-          chính xác tuyệt đối;</li>
-        <li>Chúng tôi không chịu trách nhiệm cho thiệt hại gián tiếp, ngẫu nhiên phát sinh
-          từ việc sử dụng hoặc không thể sử dụng Ứng dụng;</li>
-        <li>Bạn tự chịu trách nhiệm về kết nối mạng, thiết bị và dữ liệu di động của mình.</li>
-      </ul>
-      <p>
-        Không điều khoản nào ở đây loại trừ trách nhiệm pháp lý mà pháp luật không cho
-        phép loại trừ.
-      </p>
-    </div>
-
-    <div class="section" id="t12">
-      <div class="section-header"><div class="section-num">12</div><h2>Thay đổi điều khoản</h2></div>
-      <ul>
-        <li>Chúng tôi có thể cập nhật các Điều khoản này khi cần thiết; ngày cập nhật được
-          hiển thị ở đầu trang.</li>
-        <li>Với thay đổi <strong>quan trọng</strong>, bạn sẽ được yêu cầu xem và đồng ý lại
-          trong Ứng dụng trước khi tiếp tục sử dụng.</li>
-        <li>Việc tiếp tục sử dụng sau khi điều khoản mới có hiệu lực đồng nghĩa với việc
-          bạn chấp nhận các thay đổi đó.</li>
-      </ul>
-    </div>
-
-    <div class="section" id="t13">
-      <div class="section-header"><div class="section-num">13</div><h2>Luật áp dụng &amp; liên hệ</h2></div>
-      <p>
-        Các Điều khoản này được điều chỉnh và giải thích theo pháp luật
-        <strong>nước Cộng hòa Xã hội Chủ nghĩa Việt Nam</strong>. Mọi tranh chấp sẽ được
-        ưu tiên giải quyết thông qua thương lượng; nếu không đạt được, sẽ do cơ quan có
-        thẩm quyền tại Việt Nam giải quyết.
-      </p>
-      <div class="contact-card">
-        <strong style="font-size:1rem">MathUp Mobile — Hỗ trợ người dùng</strong>
-        <div class="row">
-          <span>📧</span>
-          <span>
-            <a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a><br/>
-            <small style="opacity:.8">Tiêu đề: "Hỗ trợ — MathUp"</small>
-          </span>
-        </div>
-        <div class="row" style="margin-top:14px; opacity:.8; font-size:.88rem">
-          <span>⏱️</span>
-          <span>Thời gian phản hồi: tối đa 15 ngày làm việc</span>
-        </div>
-      </div>
-    </div>
-
-    <a class="backtop" href="#top">↑ Về đầu trang</a>
-  </div><!-- /#terms -->
-
-  <div class="doc-divider"></div>
-
-  <!-- ════════════════════════════════════════════════════════════════════ -->
-  <!-- ════════════════════  DOC 2 — CHÍNH SÁCH BẢO MẬT  ═══════════════════ -->
-  <!-- ════════════════════════════════════════════════════════════════════ -->
-  <div class="doc" id="privacy">
-    <div class="doc-title">🔒 Chính sách Bảo mật</div>
-    <div class="doc-sub">Có hiệu lực: 02/06/2026 · Cập nhật: 02/06/2026 · Phiên bản 1.0</div>
-
-    <div class="toc">
-      <div class="toc-title">Mục lục</div>
-      <ol>
         <li><a href="#p1">Bên kiểm soát dữ liệu</a></li>
         <li><a href="#p2">Phạm vi áp dụng</a></li>
-        <li><a href="#p3">Dữ liệu cá nhân chúng tôi thu thập</a></li>
-        <li><a href="#p4">Mục đích và cơ sở pháp lý xử lý dữ liệu</a></li>
+        <li><a href="#p3">Dữ liệu thu thập</a></li>
+        <li><a href="#p4">Mục đích xử lý</a></li>
         <li><a href="#p5">Thời gian lưu trữ</a></li>
-        <li><a href="#p6">Chia sẻ dữ liệu với bên thứ ba</a></li>
-        <li><a href="#p7">Chuyển dữ liệu ra ngoài lãnh thổ Việt Nam</a></li>
+        <li><a href="#p6">Chia sẻ bên thứ ba</a></li>
+        <li><a href="#p7">Chuyển dữ liệu quốc tế</a></li>
         <li><a href="#p8">Bảo mật dữ liệu</a></li>
-        <li><a href="#p9">Quyền của chủ thể dữ liệu</a></li>
-        <li><a href="#p10">Trẻ em và người chưa thành niên</a></li>
+        <li><a href="#p9">Quyền của bạn</a></li>
+        <li><a href="#p10">Trẻ em</a></li>
         <li><a href="#p11">Thay đổi chính sách</a></li>
-        <li><a href="#p12">Liên hệ và khiếu nại</a></li>
-      </ol>
-    </div>
-
-    <div class="infobox">
-      <div class="infobox-label">Tóm tắt</div>
-      Chúng tôi thu thập email, tên hiển thị, dữ liệu trò chơi và (nếu bạn chọn)
-      ảnh đại diện. Dữ liệu được dùng để vận hành ứng dụng, không bán cho bên
-      thứ ba. Bạn có thể yêu cầu xóa tài khoản bất cứ lúc nào.
-    </div>
-
-    <div class="section" id="p1">
-      <div class="section-header"><div class="section-num">1</div><h2>Bên kiểm soát dữ liệu cá nhân</h2></div>
-      <p>
-        Nhà phát triển ứng dụng MathUp Mobile (sau đây gọi là "<strong>chúng tôi</strong>")
-        là bên kiểm soát dữ liệu cá nhân theo quy định tại
-        <strong>Nghị định 13/2023/NĐ-CP</strong> ngày 17/4/2023 của Chính phủ
-        về bảo vệ dữ liệu cá nhân.
-      </p>
-      <div class="infobox">
-        <div class="infobox-label">Thông tin liên hệ</div>
-        <strong>Ứng dụng:</strong> MathUp Mobile<br />
-        <strong>Email:</strong>
-        <a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a><br />
-        <strong>Nền tảng:</strong> Android (CH Play) &amp; iOS (App Store)
-      </div>
-    </div>
-
-    <div class="section" id="p2">
-      <div class="section-header"><div class="section-num">2</div><h2>Phạm vi áp dụng</h2></div>
-      <p>
-        Chính sách này áp dụng cho tất cả người dùng cài đặt và sử dụng
-        ứng dụng MathUp Mobile trên thiết bị di động (Android và iOS).
-        Bằng cách đăng ký tài khoản hoặc tiếp tục sử dụng ứng dụng,
-        bạn đồng ý với các điều khoản trong chính sách này.
-      </p>
-      <p>
-        Chính sách <strong>không</strong> áp dụng cho các dịch vụ của bên thứ ba
-        (Google, Supabase) — những dịch vụ này có chính sách bảo mật riêng.
-      </p>
-    </div>
-
-    <div class="section" id="p3">
-      <div class="section-header"><div class="section-num">3</div><h2>Dữ liệu cá nhân chúng tôi thu thập</h2></div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Loại dữ liệu</th><th>Chi tiết</th><th>Bắt buộc?</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Tài khoản</strong></td>
-            <td>Địa chỉ email, mật khẩu (được băm bởi Supabase Auth, chúng tôi không lưu mật khẩu thô)</td>
-            <td>Có</td>
-          </tr>
-          <tr>
-            <td><strong>Hồ sơ</strong></td>
-            <td>Tên hiển thị (2–30 ký tự), ảnh đại diện (bạn chủ động tải lên)</td>
-            <td>Tên: Có<br/>Ảnh: Không</td>
-          </tr>
-          <tr>
-            <td><strong>Đăng nhập mạng xã hội</strong></td>
-            <td>Nếu chọn đăng nhập bằng Google: email và tên từ tài khoản Google</td>
-            <td>Không</td>
-          </tr>
-          <tr>
-            <td><strong>Dữ liệu trò chơi</strong></td>
-            <td>Lịch sử trận đấu, điểm số, số câu đúng, thời gian, thứ hạng, điểm EXP, cấp độ</td>
-            <td>Tự động</td>
-          </tr>
-          <tr>
-            <td><strong>Nhiệm vụ hàng ngày</strong></td>
-            <td>Tiến trình và trạng thái hoàn thành nhiệm vụ trong ngày</td>
-            <td>Tự động</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>Dữ liệu chúng tôi KHÔNG thu thập</h3>
-      <ul>
-        <li>Vị trí địa lý (GPS)</li>
-        <li>Danh bạ điện thoại</li>
-        <li>Lịch sử duyệt web hoặc ứng dụng khác</li>
-        <li>Thông tin tài chính, số thẻ ngân hàng</li>
-        <li>Số điện thoại</li>
-        <li>Dữ liệu sinh trắc học</li>
-        <li>Cookie theo dõi xuyên ứng dụng (cross-app tracking)</li>
+        <li><a href="#p12">Liên hệ &amp; khiếu nại</a></li>
       </ul>
     </div>
 
-    <div class="section" id="p4">
-      <div class="section-header"><div class="section-num">4</div><h2>Mục đích và cơ sở pháp lý xử lý dữ liệu</h2></div>
-      <p>
-        Theo Điều 17 Nghị định 13/2023/NĐ-CP, chúng tôi xử lý dữ liệu cá nhân
-        dựa trên <strong>sự đồng ý của bạn</strong> (khi đăng ký tài khoản)
-        và <strong>hợp đồng</strong> (cung cấp dịch vụ ứng dụng).
-      </p>
-      <table class="data-table">
-        <thead>
-          <tr><th>Mục đích</th><th>Dữ liệu dùng</th><th>Cơ sở pháp lý</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Xác thực và bảo vệ tài khoản</td><td>Email, mật khẩu</td><td>Đồng ý / Hợp đồng</td></tr>
-          <tr><td>Hiển thị hồ sơ và bảng xếp hạng</td><td>Tên, ảnh đại diện, điểm xếp hạng</td><td>Đồng ý / Hợp đồng</td></tr>
-          <tr><td>Vận hành trận đấu 1v1</td><td>Dữ liệu trò chơi, ID người dùng</td><td>Hợp đồng</td></tr>
-          <tr><td>Thống kê và tiến trình học tập</td><td>Lịch sử trận đấu, EXP, cấp độ</td><td>Hợp đồng</td></tr>
-          <tr><td>Nhiệm vụ và phần thưởng hàng ngày</td><td>Dữ liệu nhiệm vụ</td><td>Hợp đồng</td></tr>
-          <tr><td>Gửi email đặt lại mật khẩu</td><td>Email</td><td>Đồng ý / Lợi ích hợp pháp</td></tr>
-          <tr><td>Cải thiện ứng dụng (phân tích lỗi)</td><td>Dữ liệu trò chơi ẩn danh</td><td>Lợi ích hợp pháp</td></tr>
-        </tbody>
-      </table>
-      <p>
-        Chúng tôi <strong>không</strong> sử dụng dữ liệu cá nhân cho mục đích
-        quảng cáo, tiếp thị đến bên thứ ba, hay lập hồ sơ hành vi tự động
-        để đưa ra quyết định ảnh hưởng đến quyền lợi của bạn.
-      </p>
-    </div>
+  </nav>
 
-    <div class="section" id="p5">
-      <div class="section-header"><div class="section-num">5</div><h2>Thời gian lưu trữ dữ liệu</h2></div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Loại dữ liệu</th><th>Thời gian lưu trữ</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Tài khoản và hồ sơ</td><td>Đến khi bạn yêu cầu xóa tài khoản</td></tr>
-          <tr><td>Lịch sử trận đấu</td><td>Đến khi bạn yêu cầu xóa tài khoản</td></tr>
-          <tr><td>Nhiệm vụ hàng ngày</td><td>Đến khi bạn yêu cầu xóa tài khoản</td></tr>
-          <tr><td>Ảnh đại diện</td><td>Đến khi bạn thay thế hoặc xóa tài khoản</td></tr>
-          <tr><td>Log vận hành máy chủ</td><td>Tối đa 30 ngày, sau đó xóa tự động</td></tr>
-        </tbody>
-      </table>
-      <p>
-        Sau khi nhận yêu cầu xóa tài khoản hợp lệ, toàn bộ dữ liệu cá nhân
-        của bạn sẽ được xóa vĩnh viễn trong vòng <strong>30 ngày</strong>,
-        trừ trường hợp pháp luật yêu cầu lưu giữ lâu hơn.
-      </p>
-    </div>
+  <!-- Main content -->
+  <main class="content">
 
-    <div class="section" id="p6">
-      <div class="section-header"><div class="section-num">6</div><h2>Chia sẻ dữ liệu với bên thứ ba</h2></div>
-      <p>
-        Chúng tôi <strong>không bán, cho thuê hay trao đổi</strong> dữ liệu
-        cá nhân của bạn. Dữ liệu chỉ được chia sẻ trong các trường hợp sau:
-      </p>
-      <h3>Đối tác kỹ thuật cần thiết</h3>
-      <div class="infobox">
-        <div class="infobox-label">Supabase, Inc.</div>
-        Vai trò: Lưu trữ cơ sở dữ liệu, xác thực người dùng, lưu trữ ảnh (Storage).<br/>
-        Dữ liệu chia sẻ: Toàn bộ dữ liệu tài khoản và trò chơi lưu trên hệ thống của Supabase.<br/>
-        Chính sách riêng:
-        <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>
+    <!-- ══════════════════════════════════════
+         ĐIỀU KHOẢN DỊCH VỤ
+    ══════════════════════════════════════ -->
+    <div class="doc" id="terms">
+      <div class="doc-eyebrow">Tài liệu pháp lý</div>
+      <h1 class="doc-title">Điều khoản Dịch vụ</h1>
+      <div class="doc-meta">
+        Có hiệu lực: 5 tháng 6, 2026 &nbsp;·&nbsp; Phiên bản 1.0 &nbsp;·&nbsp; Áp dụng cho Android &amp; iOS
       </div>
-      <div class="infobox" style="margin-top:10px">
-        <div class="infobox-label">Google LLC (tùy chọn)</div>
-        Vai trò: Xác thực OAuth khi bạn chọn "Đăng nhập bằng Google".<br/>
-        Dữ liệu chia sẻ: Email và tên Google của bạn được gửi đến chúng tôi qua Google OAuth.<br/>
-        Chính sách riêng:
-        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>
+
+      <div class="summary">
+        <div class="summary-label">Tóm tắt</div>
+        <p>MathUp là trò chơi thi đấu toán học 1v1 miễn phí. Bằng việc sử dụng ứng dụng, bạn đồng ý chơi công bằng, không gian lận, không quấy rối và tôn trọng người chơi khác. Điểm và EXP chỉ có giá trị trong trò chơi, không quy đổi thành tiền mặt.</p>
       </div>
-      <h3>Trường hợp pháp lý</h3>
-      <p>
-        Chúng tôi có thể tiết lộ dữ liệu khi được yêu cầu bởi cơ quan nhà nước
-        có thẩm quyền theo quy định pháp luật Việt Nam, hoặc để bảo vệ quyền
-        và lợi ích hợp pháp của chúng tôi và người dùng.
-      </p>
-    </div>
 
-    <div class="section" id="p7">
-      <div class="section-header"><div class="section-num">7</div><h2>Chuyển dữ liệu ra ngoài lãnh thổ Việt Nam</h2></div>
-      <p>
-        Theo Điều 25 Nghị định 13/2023/NĐ-CP, chúng tôi thông báo rằng:
-        dữ liệu cá nhân của bạn được lưu trữ trên cơ sở hạ tầng đám mây
-        của <strong>Supabase</strong> (Amazon Web Services), đặt tại
-        <strong>Hoa Kỳ và/hoặc khu vực Đông Nam Á</strong>.
-      </p>
-      <p>
-        Việc chuyển dữ liệu này là cần thiết để cung cấp dịch vụ ứng dụng.
-        Supabase áp dụng các biện pháp bảo vệ dữ liệu đáp ứng tiêu chuẩn
-        quốc tế, bao gồm mã hóa TLS khi truyền tải và AES-256 khi lưu trữ.
-      </p>
-      <div class="infobox">
-        <div class="infobox-label">Thông tin tuân thủ</div>
-        Chúng tôi cam kết thực hiện các nghĩa vụ theo pháp luật Việt Nam liên
-        quan đến chuyển dữ liệu cá nhân ra nước ngoài, bao gồm đánh giá tác
-        động và thông báo đến cơ quan có thẩm quyền khi được yêu cầu.
+      <div class="section" id="t1">
+        <div class="section-heading"><span class="section-num">1</span> Chấp nhận điều khoản</div>
+        <p>Bằng việc tạo tài khoản, đăng nhập hoặc sử dụng ứng dụng MathUp Mobile (sau đây gọi là <strong>Ứng dụng</strong> hoặc <strong>Dịch vụ</strong>), bạn xác nhận đã đọc, hiểu và đồng ý chịu ràng buộc bởi các Điều khoản Dịch vụ này cùng <a href="#privacy">Chính sách Bảo mật</a> của chúng tôi.</p>
+        <p>Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản, vui lòng không sử dụng Ứng dụng.</p>
       </div>
-    </div>
 
-    <div class="section" id="p8">
-      <div class="section-header"><div class="section-num">8</div><h2>Bảo mật dữ liệu</h2></div>
-      <p>
-        Chúng tôi áp dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ
-        dữ liệu cá nhân của bạn:
-      </p>
-      <ul>
-        <li><strong>Mã hóa truyền tải:</strong> mọi kết nối ứng dụng ↔ máy chủ đều dùng HTTPS/TLS 1.2+</li>
-        <li><strong>Mật khẩu:</strong> được băm bằng bcrypt — chúng tôi không lưu mật khẩu thô</li>
-        <li><strong>Xác thực API:</strong> mọi yêu cầu từ ứng dụng đều phải kèm JWT hợp lệ được xác minh phía máy chủ</li>
-        <li><strong>Phân quyền dữ liệu:</strong> Row Level Security (RLS) trên cơ sở dữ liệu — bạn chỉ truy cập được dữ liệu của chính mình</li>
-        <li><strong>Giới hạn phạm vi:</strong> chống userId spoofing, giới hạn kích thước request, kiểm tra đầu vào phía máy chủ</li>
-        <li><strong>Lưu trữ ảnh:</strong> ảnh đại diện chỉ được upload vào thư mục riêng của tài khoản bạn</li>
-      </ul>
-      <p>
-        Tuy nhiên, không có hệ thống nào bảo mật tuyệt đối 100%.
-        Nếu phát hiện sự cố bảo mật ảnh hưởng đến dữ liệu của bạn,
-        chúng tôi sẽ thông báo trong vòng <strong>72 giờ</strong> theo quy định.
-      </p>
-    </div>
-
-    <div class="section" id="p9">
-      <div class="section-header"><div class="section-num">9</div><h2>Quyền của chủ thể dữ liệu</h2></div>
-      <p>
-        Theo <strong>Điều 9, Nghị định 13/2023/NĐ-CP</strong>, bạn có đầy đủ
-        các quyền sau đây đối với dữ liệu cá nhân của mình:
-      </p>
-      <div class="rights-grid">
-        <div class="right-item"><div class="icon">👁️</div><strong>Quyền được biết</strong>Biết dữ liệu nào đang được xử lý và mục đích</div>
-        <div class="right-item"><div class="icon">✅</div><strong>Quyền đồng ý</strong>Đồng ý hoặc không đồng ý cho phép xử lý dữ liệu</div>
-        <div class="right-item"><div class="icon">🔍</div><strong>Quyền truy cập</strong>Xem dữ liệu cá nhân đang lưu trữ</div>
-        <div class="right-item"><div class="icon">✏️</div><strong>Quyền chỉnh sửa</strong>Cập nhật tên, ảnh đại diện trong ứng dụng</div>
-        <div class="right-item"><div class="icon">🗑️</div><strong>Quyền xóa dữ liệu</strong>Yêu cầu xóa toàn bộ tài khoản và dữ liệu</div>
-        <div class="right-item"><div class="icon">⏸️</div><strong>Quyền hạn chế xử lý</strong>Yêu cầu tạm dừng xử lý một số dữ liệu</div>
-        <div class="right-item"><div class="icon">📦</div><strong>Quyền cung cấp dữ liệu</strong>Nhận bản sao dữ liệu cá nhân của bạn</div>
-        <div class="right-item"><div class="icon">🚫</div><strong>Quyền phản đối</strong>Phản đối việc xử lý dữ liệu trong một số trường hợp</div>
-        <div class="right-item"><div class="icon">↩️</div><strong>Quyền rút lại đồng ý</strong>Rút lại sự đồng ý bất cứ lúc nào</div>
-        <div class="right-item"><div class="icon">📣</div><strong>Quyền khiếu nại</strong>Khiếu nại đến chúng tôi hoặc cơ quan có thẩm quyền</div>
-        <div class="right-item"><div class="icon">💰</div><strong>Quyền bồi thường</strong>Yêu cầu bồi thường khi vi phạm gây thiệt hại</div>
-        <div class="right-item"><div class="icon">🛡️</div><strong>Quyền tự bảo vệ</strong>Áp dụng biện pháp tự bảo vệ theo pháp luật</div>
+      <div class="section" id="t2">
+        <div class="section-heading"><span class="section-num">2</span> Mô tả dịch vụ</div>
+        <p>MathUp là ứng dụng giáo dục cho phép người dùng thi đấu giải toán 1v1 theo thời gian thực, theo dõi thống kê cá nhân, leo bảng xếp hạng và hoàn thành nhiệm vụ hàng ngày. Dịch vụ được cung cấp <strong>miễn phí</strong>.</p>
+        <p>Chúng tôi có thể cập nhật, bổ sung hoặc ngừng một số tính năng bất cứ lúc nào nhằm cải thiện trải nghiệm người dùng. Một số tính năng yêu cầu kết nối Internet ổn định.</p>
       </div>
-      <h3>Cách thực hiện quyền của bạn</h3>
-      <ul>
-        <li><strong>Chỉnh sửa tên / ảnh:</strong> trực tiếp trong ứng dụng, mục Hồ sơ</li>
-        <li><strong>Xóa tài khoản / xuất dữ liệu / yêu cầu khác:</strong>
-          gửi email đến <a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a>
-          với tiêu đề "<em>Yêu cầu dữ liệu cá nhân — MathUp</em>"</li>
-      </ul>
-      <p>
-        Chúng tôi sẽ phản hồi trong vòng <strong>15 ngày làm việc</strong>
-        kể từ ngày nhận yêu cầu hợp lệ.
-      </p>
-    </div>
 
-    <div class="section" id="p10">
-      <div class="section-header"><div class="section-num">10</div><h2>Trẻ em và người chưa thành niên</h2></div>
-      <p>
-        MathUp Mobile là ứng dụng giáo dục phù hợp cho mọi lứa tuổi.
-        Đối với người dùng dưới <strong>16 tuổi</strong>, cha mẹ hoặc người
-        giám hộ hợp pháp có quyền:
-      </p>
-      <ul>
-        <li>Quản lý, chỉnh sửa, hoặc yêu cầu xóa tài khoản của trẻ</li>
-        <li>Liên hệ chúng tôi để được hỗ trợ theo các quyền tại Mục 9</li>
-      </ul>
-      <p>
-        Chúng tôi không cố ý thu thập dữ liệu nhạy cảm của trẻ em ngoài
-        những gì cần thiết để vận hành ứng dụng. Nếu bạn cho rằng chúng tôi
-        đang lưu trữ dữ liệu của trẻ em không phù hợp, vui lòng liên hệ ngay.
-      </p>
-    </div>
+      <div class="section" id="t3">
+        <div class="section-heading"><span class="section-num">3</span> Điều kiện sử dụng &amp; độ tuổi</div>
+        <p>MathUp phù hợp cho mọi lứa tuổi và được thiết kế cho mục đích học tập.</p>
+        <ul>
+          <li>Người dùng dưới <strong>16 tuổi</strong> cần có sự đồng ý và giám sát của cha mẹ hoặc người giám hộ hợp pháp khi sử dụng Ứng dụng.</li>
+          <li>Cha mẹ và người giám hộ chịu trách nhiệm về hoạt động của trẻ trong Ứng dụng và có quyền yêu cầu quản lý hoặc xóa tài khoản của trẻ.</li>
+          <li>Bạn cam kết các thông tin cung cấp khi đăng ký là chính xác và thuộc về bạn.</li>
+        </ul>
+      </div>
 
-    <div class="section" id="p11">
-      <div class="section-header"><div class="section-num">11</div><h2>Thay đổi chính sách bảo mật</h2></div>
-      <p>
-        Chúng tôi có thể cập nhật chính sách này khi có thay đổi về tính năng,
-        pháp luật, hoặc thực tiễn bảo mật.
-      </p>
-      <ul>
-        <li>Ngày cập nhật sẽ được hiển thị ở đầu trang</li>
-        <li>Thay đổi <strong>quan trọng</strong> sẽ được thông báo trong ứng dụng trước ít nhất <strong>7 ngày</strong></li>
-        <li>Việc tiếp tục sử dụng ứng dụng sau ngày có hiệu lực đồng nghĩa với việc chấp nhận chính sách mới</li>
-        <li>Nếu không đồng ý, bạn có thể yêu cầu xóa tài khoản trước ngày có hiệu lực</li>
-      </ul>
-    </div>
+      <div class="section" id="t4">
+        <div class="section-heading"><span class="section-num">4</span> Tài khoản người dùng</div>
+        <ul>
+          <li>Bạn chịu trách nhiệm giữ bí mật thông tin đăng nhập và mọi hoạt động diễn ra dưới tài khoản của mình.</li>
+          <li>Thông báo cho chúng tôi ngay nếu phát hiện tài khoản bị truy cập trái phép.</li>
+          <li>Mỗi người chỉ nên sử dụng tài khoản của chính mình; không mua bán, cho thuê hoặc chuyển nhượng tài khoản.</li>
+          <li>Bạn có thể yêu cầu xóa tài khoản bất cứ lúc nào theo hướng dẫn tại <a href="#privacy">Chính sách Bảo mật</a>.</li>
+        </ul>
+      </div>
 
-    <div class="section" id="p12">
-      <div class="section-header"><div class="section-num">12</div><h2>Liên hệ và khiếu nại</h2></div>
-      <p>
-        Mọi câu hỏi, yêu cầu thực hiện quyền, hoặc khiếu nại liên quan đến
-        dữ liệu cá nhân, vui lòng liên hệ:
-      </p>
-      <div class="contact-card">
-        <strong style="font-size:1rem">MathUp Mobile — Hỗ trợ dữ liệu cá nhân</strong>
-        <div class="row">
-          <span>📧</span>
-          <span>
-            <a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a><br/>
-            <small style="opacity:.8">Tiêu đề: "Yêu cầu dữ liệu cá nhân — MathUp"</small>
-          </span>
-        </div>
-        <div class="row" style="margin-top:14px; opacity:.8; font-size:.88rem">
-          <span>⏱️</span>
-          <span>Thời gian phản hồi: tối đa 15 ngày làm việc</span>
+      <div class="section" id="t5">
+        <div class="section-heading"><span class="section-num">5</span> Quy tắc ứng xử &amp; chơi công bằng</div>
+        <p>Khi sử dụng MathUp, bạn không được:</p>
+        <ul>
+          <li>Gian lận bằng bot, script tự động, công cụ giải toán bên ngoài, hoặc khai thác lỗi để giành lợi thế không công bằng;</li>
+          <li>Can thiệp, dịch ngược, tấn công hoặc cố gắng truy cập trái phép vào hệ thống, máy chủ hay dữ liệu của người dùng khác;</li>
+          <li>Tạo nhiều tài khoản nhằm thao túng bảng xếp hạng hoặc nhiệm vụ;</li>
+          <li>Quấy rối, đe dọa, lăng mạ hoặc phân biệt đối xử với người chơi khác;</li>
+          <li>Gửi spam, quảng cáo hoặc nội dung vi phạm pháp luật Việt Nam.</li>
+        </ul>
+        <div class="note">
+          <p>Vi phạm các quy tắc trên có thể dẫn đến đặt lại điểm, khóa tính năng hoặc chấm dứt tài khoản mà không cần báo trước (xem Mục 10).</p>
         </div>
       </div>
-      <h3>Khiếu nại đến cơ quan nhà nước</h3>
-      <p>
-        Nếu bạn cho rằng quyền của mình bị vi phạm và chúng tôi không giải
-        quyết thỏa đáng, bạn có quyền khiếu nại đến
-        <strong>Cục An toàn thông tin, Bộ Thông tin và Truyền thông</strong>
-        hoặc cơ quan có thẩm quyền khác theo pháp luật Việt Nam.
-      </p>
-    </div>
 
-    <a class="backtop" href="#top">↑ Về đầu trang</a>
-  </div><!-- /#privacy -->
+      <div class="section" id="t6">
+        <div class="section-heading"><span class="section-num">6</span> Nội dung trò chuyện &amp; biểu cảm</div>
+        <p>Trong trận đấu, người chơi có thể gửi tin nhắn nhanh và biểu cảm (emoji). Bạn tự chịu trách nhiệm về nội dung mình gửi.</p>
+        <ul>
+          <li>Hệ thống áp dụng giới hạn tần suất và bộ lọc ngôn từ không phù hợp.</li>
+          <li>Chúng tôi có quyền lọc, ẩn hoặc xử lý nội dung vi phạm mà không cần báo trước.</li>
+          <li>Nghiêm cấm nội dung thù ghét, khiêu dâm, bạo lực hoặc xâm phạm quyền người khác.</li>
+        </ul>
+      </div>
 
-</div><!-- /wrap -->
+      <div class="section" id="t7">
+        <div class="section-heading"><span class="section-num">7</span> Điểm, EXP và vật phẩm ảo</div>
+        <p>Điểm xếp hạng, điểm kinh nghiệm (EXP), cấp độ, huy hiệu và phần thưởng nhiệm vụ là <strong>vật phẩm ảo</strong> chỉ có giá trị trong phạm vi Ứng dụng.</p>
+        <ul>
+          <li>Chúng <strong>không</strong> có giá trị tiền tệ và không thể quy đổi, mua bán hay chuyển nhượng thành tiền hoặc tài sản thực.</li>
+          <li>Chúng tôi có thể điều chỉnh công thức tính điểm và EXP để cân bằng trò chơi.</li>
+          <li>Điểm thu được do gian lận có thể bị thu hồi.</li>
+        </ul>
+      </div>
+
+      <div class="section" id="t8">
+        <div class="section-heading"><span class="section-num">8</span> Quyền sở hữu trí tuệ</div>
+        <p>Toàn bộ mã nguồn, thiết kế, giao diện, logo, nội dung câu hỏi và tài sản của MathUp Mobile thuộc quyền sở hữu của nhà phát triển và được bảo vệ theo pháp luật.</p>
+        <p>Bạn được cấp quyền sử dụng cá nhân, phi thương mại, không độc quyền và có thể bị thu hồi đối với Ứng dụng. Bạn không được sao chép, phân phối, chỉnh sửa hoặc khai thác thương mại bất kỳ phần nào của Ứng dụng nếu không có sự cho phép bằng văn bản.</p>
+      </div>
+
+      <div class="section" id="t9">
+        <div class="section-heading"><span class="section-num">9</span> Quyền riêng tư</div>
+        <p>Việc thu thập và xử lý dữ liệu cá nhân của bạn được mô tả chi tiết trong <a href="#privacy">Chính sách Bảo mật</a>, là một phần không tách rời của các Điều khoản này. Bằng việc sử dụng Ứng dụng, bạn đồng ý với cách chúng tôi xử lý dữ liệu như đã nêu tại đó.</p>
+      </div>
+
+      <div class="section" id="t10">
+        <div class="section-heading"><span class="section-num">10</span> Tạm ngưng &amp; chấm dứt tài khoản</div>
+        <p>Chúng tôi có thể tạm ngưng hoặc chấm dứt quyền truy cập của bạn nếu:</p>
+        <ul>
+          <li>Bạn vi phạm các Điều khoản này hoặc pháp luật hiện hành;</li>
+          <li>Hành vi của bạn gây hại cho người chơi khác hoặc hệ thống;</li>
+          <li>Có yêu cầu từ cơ quan nhà nước có thẩm quyền.</li>
+        </ul>
+        <p>Bạn có thể ngừng sử dụng và yêu cầu xóa tài khoản bất cứ lúc nào. Một số dữ liệu có thể được lưu giữ theo thời hạn nêu trong Chính sách Bảo mật hoặc theo yêu cầu của pháp luật.</p>
+      </div>
+
+      <div class="section" id="t11">
+        <div class="section-heading"><span class="section-num">11</span> Miễn trừ trách nhiệm &amp; giới hạn</div>
+        <p>Ứng dụng được cung cấp <strong>"như hiện có"</strong> và <strong>"theo khả năng sẵn có"</strong>. Trong phạm vi pháp luật cho phép:</p>
+        <ul>
+          <li>Chúng tôi không bảo đảm Dịch vụ luôn không gián đoạn, không lỗi hoặc luôn chính xác tuyệt đối;</li>
+          <li>Chúng tôi không chịu trách nhiệm cho thiệt hại gián tiếp, ngẫu nhiên phát sinh từ việc sử dụng hoặc không thể sử dụng Ứng dụng;</li>
+          <li>Bạn tự chịu trách nhiệm về kết nối mạng, thiết bị và dữ liệu di động của mình.</li>
+        </ul>
+        <p>Không điều khoản nào ở đây loại trừ trách nhiệm pháp lý mà pháp luật không cho phép loại trừ.</p>
+      </div>
+
+      <div class="section" id="t12">
+        <div class="section-heading"><span class="section-num">12</span> Thay đổi điều khoản</div>
+        <ul>
+          <li>Chúng tôi có thể cập nhật các Điều khoản này khi cần thiết; ngày cập nhật được hiển thị ở đầu trang.</li>
+          <li>Với thay đổi <strong>quan trọng</strong>, bạn sẽ được yêu cầu xem và đồng ý lại trong Ứng dụng trước khi tiếp tục sử dụng.</li>
+          <li>Việc tiếp tục sử dụng sau khi điều khoản mới có hiệu lực đồng nghĩa với việc bạn chấp nhận các thay đổi đó.</li>
+        </ul>
+      </div>
+
+      <div class="section" id="t13">
+        <div class="section-heading"><span class="section-num">13</span> Luật áp dụng &amp; liên hệ</div>
+        <p>Các Điều khoản này được điều chỉnh và giải thích theo pháp luật <strong>nước Cộng hòa Xã hội Chủ nghĩa Việt Nam</strong>. Mọi tranh chấp sẽ được ưu tiên giải quyết thông qua thương lượng; nếu không đạt được thỏa thuận, sẽ do cơ quan có thẩm quyền tại Việt Nam giải quyết.</p>
+        <div class="contact-block">
+          <div class="cb-title">Liên hệ hỗ trợ</div>
+          <div class="cb-row"><span class="cb-label">Ứng dụng</span><span>MathUp Mobile</span></div>
+          <div class="cb-row"><span class="cb-label">Email</span><span><a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a></span></div>
+          <div class="cb-row"><span class="cb-label">Tiêu đề email</span><span>Hỗ trợ — MathUp</span></div>
+          <div class="cb-row"><span class="cb-label">Thời gian phản hồi</span><span>Tối đa 15 ngày làm việc</span></div>
+        </div>
+      </div>
+
+    </div><!-- /#terms -->
+
+
+    <!-- ══════════════════════════════════════
+         CHÍNH SÁCH BẢO MẬT
+    ══════════════════════════════════════ -->
+    <div class="doc" id="privacy">
+      <div class="doc-eyebrow">Tài liệu pháp lý</div>
+      <h1 class="doc-title">Chính sách Bảo mật</h1>
+      <div class="doc-meta">
+        Có hiệu lực: 2 tháng 6, 2026 &nbsp;·&nbsp; Cập nhật: 2 tháng 6, 2026 &nbsp;·&nbsp; Phiên bản 1.0
+      </div>
+
+      <div class="summary">
+        <div class="summary-label">Tóm tắt</div>
+        <p>Chúng tôi thu thập email, tên hiển thị, dữ liệu trò chơi và (nếu bạn chọn) ảnh đại diện. Dữ liệu được dùng để vận hành ứng dụng và không được bán cho bên thứ ba. Bạn có thể yêu cầu xóa tài khoản bất cứ lúc nào.</p>
+      </div>
+
+      <div class="section" id="p1">
+        <div class="section-heading"><span class="section-num">1</span> Bên kiểm soát dữ liệu cá nhân</div>
+        <p>Nhà phát triển ứng dụng MathUp Mobile (sau đây gọi là <strong>chúng tôi</strong>) là bên kiểm soát dữ liệu cá nhân theo quy định tại <strong>Nghị định 13/2023/NĐ-CP</strong> ngày 17/4/2023 của Chính phủ về bảo vệ dữ liệu cá nhân.</p>
+        <div class="contact-block">
+          <div class="cb-title">Thông tin liên hệ</div>
+          <div class="cb-row"><span class="cb-label">Ứng dụng</span><span>MathUp Mobile</span></div>
+          <div class="cb-row"><span class="cb-label">Email</span><span><a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a></span></div>
+          <div class="cb-row"><span class="cb-label">Nền tảng</span><span>Android (CH Play) &amp; iOS (App Store)</span></div>
+        </div>
+      </div>
+
+      <div class="section" id="p2">
+        <div class="section-heading"><span class="section-num">2</span> Phạm vi áp dụng</div>
+        <p>Chính sách này áp dụng cho tất cả người dùng cài đặt và sử dụng ứng dụng MathUp Mobile trên thiết bị di động Android và iOS. Bằng cách đăng ký tài khoản hoặc tiếp tục sử dụng ứng dụng, bạn đồng ý với các điều khoản trong chính sách này.</p>
+        <p>Chính sách <strong>không</strong> áp dụng cho các dịch vụ của bên thứ ba như Google và Supabase — những dịch vụ này có chính sách bảo mật riêng.</p>
+      </div>
+
+      <div class="section" id="p3">
+        <div class="section-heading"><span class="section-num">3</span> Dữ liệu cá nhân chúng tôi thu thập</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Loại dữ liệu</th><th>Chi tiết</th><th>Bắt buộc</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Tài khoản</strong></td><td>Địa chỉ email; mật khẩu được băm bởi Supabase Auth — chúng tôi không lưu mật khẩu thô</td><td>Có</td></tr>
+              <tr><td><strong>Hồ sơ</strong></td><td>Tên hiển thị (2–30 ký tự); ảnh đại diện do bạn chủ động tải lên</td><td>Tên: Có · Ảnh: Không</td></tr>
+              <tr><td><strong>Đăng nhập Google</strong></td><td>Email và tên từ tài khoản Google (khi bạn chọn đăng nhập bằng Google)</td><td>Không</td></tr>
+              <tr><td><strong>Dữ liệu trò chơi</strong></td><td>Lịch sử trận đấu, điểm số, số câu đúng, thời gian, thứ hạng, EXP, cấp độ</td><td>Tự động</td></tr>
+              <tr><td><strong>Nhiệm vụ hàng ngày</strong></td><td>Tiến trình và trạng thái hoàn thành nhiệm vụ</td><td>Tự động</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Dữ liệu chúng tôi không thu thập</h3>
+        <ul>
+          <li>Vị trí địa lý (GPS)</li>
+          <li>Danh bạ điện thoại</li>
+          <li>Lịch sử duyệt web hoặc ứng dụng khác</li>
+          <li>Thông tin tài chính, số thẻ ngân hàng</li>
+          <li>Số điện thoại</li>
+          <li>Dữ liệu sinh trắc học</li>
+          <li>Cookie theo dõi xuyên ứng dụng (cross-app tracking)</li>
+        </ul>
+      </div>
+
+      <div class="section" id="p4">
+        <div class="section-heading"><span class="section-num">4</span> Mục đích và cơ sở pháp lý xử lý dữ liệu</div>
+        <p>Theo Điều 17 Nghị định 13/2023/NĐ-CP, chúng tôi xử lý dữ liệu cá nhân dựa trên <strong>sự đồng ý của bạn</strong> (khi đăng ký tài khoản) và <strong>hợp đồng</strong> (cung cấp dịch vụ ứng dụng).</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Mục đích</th><th>Dữ liệu sử dụng</th><th>Cơ sở pháp lý</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Xác thực và bảo vệ tài khoản</td><td>Email, mật khẩu</td><td>Đồng ý / Hợp đồng</td></tr>
+              <tr><td>Hiển thị hồ sơ và bảng xếp hạng</td><td>Tên, ảnh đại diện, điểm xếp hạng</td><td>Đồng ý / Hợp đồng</td></tr>
+              <tr><td>Vận hành trận đấu 1v1</td><td>Dữ liệu trò chơi, ID người dùng</td><td>Hợp đồng</td></tr>
+              <tr><td>Thống kê và tiến trình học tập</td><td>Lịch sử trận đấu, EXP, cấp độ</td><td>Hợp đồng</td></tr>
+              <tr><td>Nhiệm vụ và phần thưởng hàng ngày</td><td>Dữ liệu nhiệm vụ</td><td>Hợp đồng</td></tr>
+              <tr><td>Gửi email đặt lại mật khẩu</td><td>Email</td><td>Đồng ý / Lợi ích hợp pháp</td></tr>
+              <tr><td>Cải thiện ứng dụng (phân tích lỗi)</td><td>Dữ liệu trò chơi ẩn danh</td><td>Lợi ích hợp pháp</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Chúng tôi <strong>không</strong> sử dụng dữ liệu cá nhân cho mục đích quảng cáo, tiếp thị đến bên thứ ba, hoặc lập hồ sơ hành vi tự động để đưa ra quyết định ảnh hưởng đến quyền lợi của bạn.</p>
+      </div>
+
+      <div class="section" id="p5">
+        <div class="section-heading"><span class="section-num">5</span> Thời gian lưu trữ dữ liệu</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Loại dữ liệu</th><th>Thời gian lưu trữ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tài khoản và hồ sơ</td><td>Đến khi bạn yêu cầu xóa tài khoản</td></tr>
+              <tr><td>Lịch sử trận đấu</td><td>Đến khi bạn yêu cầu xóa tài khoản</td></tr>
+              <tr><td>Nhiệm vụ hàng ngày</td><td>Đến khi bạn yêu cầu xóa tài khoản</td></tr>
+              <tr><td>Ảnh đại diện</td><td>Đến khi bạn thay thế hoặc xóa tài khoản</td></tr>
+              <tr><td>Log vận hành máy chủ</td><td>Tối đa 30 ngày, sau đó xóa tự động</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sau khi nhận yêu cầu xóa tài khoản hợp lệ, toàn bộ dữ liệu cá nhân của bạn sẽ được xóa vĩnh viễn trong vòng <strong>30 ngày</strong>, trừ trường hợp pháp luật yêu cầu lưu giữ lâu hơn.</p>
+      </div>
+
+      <div class="section" id="p6">
+        <div class="section-heading"><span class="section-num">6</span> Chia sẻ dữ liệu với bên thứ ba</div>
+        <p>Chúng tôi <strong>không bán, cho thuê hay trao đổi</strong> dữ liệu cá nhân của bạn. Dữ liệu chỉ được chia sẻ trong các trường hợp sau:</p>
+
+        <h3>Đối tác kỹ thuật cần thiết</h3>
+        <div class="contact-block" style="margin-bottom: 10px;">
+          <div class="cb-title">Supabase, Inc.</div>
+          <div class="cb-row"><span class="cb-label">Vai trò</span><span>Lưu trữ cơ sở dữ liệu, xác thực người dùng, lưu trữ ảnh</span></div>
+          <div class="cb-row"><span class="cb-label">Dữ liệu chia sẻ</span><span>Toàn bộ dữ liệu tài khoản và trò chơi lưu trên hệ thống Supabase</span></div>
+          <div class="cb-row"><span class="cb-label">Chính sách riêng</span><span><a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a></span></div>
+        </div>
+        <div class="contact-block">
+          <div class="cb-title">Google LLC <span style="font-weight:400;color:var(--gray-light)">(tùy chọn)</span></div>
+          <div class="cb-row"><span class="cb-label">Vai trò</span><span>Xác thực OAuth khi bạn chọn "Đăng nhập bằng Google"</span></div>
+          <div class="cb-row"><span class="cb-label">Dữ liệu chia sẻ</span><span>Email và tên Google của bạn được gửi đến chúng tôi qua Google OAuth</span></div>
+          <div class="cb-row"><span class="cb-label">Chính sách riêng</span><span><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></span></div>
+        </div>
+
+        <h3>Trường hợp pháp lý</h3>
+        <p>Chúng tôi có thể tiết lộ dữ liệu khi được yêu cầu bởi cơ quan nhà nước có thẩm quyền theo quy định pháp luật Việt Nam, hoặc để bảo vệ quyền và lợi ích hợp pháp của chúng tôi và người dùng.</p>
+      </div>
+
+      <div class="section" id="p7">
+        <div class="section-heading"><span class="section-num">7</span> Chuyển dữ liệu ra ngoài lãnh thổ Việt Nam</div>
+        <p>Theo Điều 25 Nghị định 13/2023/NĐ-CP, chúng tôi thông báo rằng dữ liệu cá nhân của bạn được lưu trữ trên cơ sở hạ tầng đám mây của <strong>Supabase</strong> (Amazon Web Services), đặt tại <strong>Hoa Kỳ và/hoặc khu vực Đông Nam Á</strong>.</p>
+        <p>Việc chuyển dữ liệu này là cần thiết để cung cấp dịch vụ ứng dụng. Supabase áp dụng các biện pháp bảo vệ dữ liệu đáp ứng tiêu chuẩn quốc tế, bao gồm mã hóa TLS khi truyền tải và AES-256 khi lưu trữ.</p>
+        <div class="note">
+          <p>Chúng tôi cam kết thực hiện các nghĩa vụ theo pháp luật Việt Nam liên quan đến chuyển dữ liệu cá nhân ra nước ngoài, bao gồm đánh giá tác động và thông báo đến cơ quan có thẩm quyền khi được yêu cầu.</p>
+        </div>
+      </div>
+
+      <div class="section" id="p8">
+        <div class="section-heading"><span class="section-num">8</span> Bảo mật dữ liệu</div>
+        <p>Chúng tôi áp dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ dữ liệu cá nhân của bạn:</p>
+        <ul>
+          <li><strong>Mã hóa truyền tải:</strong> mọi kết nối ứng dụng ↔ máy chủ đều dùng HTTPS/TLS 1.2+</li>
+          <li><strong>Mật khẩu:</strong> được băm bằng bcrypt — chúng tôi không lưu mật khẩu thô</li>
+          <li><strong>Xác thực API:</strong> mọi yêu cầu từ ứng dụng đều phải kèm JWT hợp lệ được xác minh phía máy chủ</li>
+          <li><strong>Phân quyền dữ liệu:</strong> Row Level Security (RLS) trên cơ sở dữ liệu — bạn chỉ truy cập được dữ liệu của chính mình</li>
+          <li><strong>Giới hạn phạm vi:</strong> chống userId spoofing, giới hạn kích thước request, kiểm tra đầu vào phía máy chủ</li>
+          <li><strong>Lưu trữ ảnh:</strong> ảnh đại diện chỉ được tải lên vào thư mục riêng của tài khoản bạn</li>
+        </ul>
+        <p>Tuy nhiên, không có hệ thống nào bảo mật tuyệt đối 100%. Nếu phát hiện sự cố bảo mật ảnh hưởng đến dữ liệu của bạn, chúng tôi sẽ thông báo trong vòng <strong>72 giờ</strong> theo quy định.</p>
+      </div>
+
+      <div class="section" id="p9">
+        <div class="section-heading"><span class="section-num">9</span> Quyền của chủ thể dữ liệu</div>
+        <p>Theo <strong>Điều 9, Nghị định 13/2023/NĐ-CP</strong>, bạn có đầy đủ các quyền sau đây đối với dữ liệu cá nhân của mình:</p>
+        <div class="rights-grid">
+          <div class="right-item"><div class="r-title">Quyền được biết</div><div class="r-desc">Biết dữ liệu nào đang được xử lý và mục đích xử lý</div></div>
+          <div class="right-item"><div class="r-title">Quyền đồng ý</div><div class="r-desc">Đồng ý hoặc không đồng ý cho phép xử lý dữ liệu</div></div>
+          <div class="right-item"><div class="r-title">Quyền truy cập</div><div class="r-desc">Xem dữ liệu cá nhân đang được lưu trữ</div></div>
+          <div class="right-item"><div class="r-title">Quyền chỉnh sửa</div><div class="r-desc">Cập nhật tên hiển thị và ảnh đại diện trong ứng dụng</div></div>
+          <div class="right-item"><div class="r-title">Quyền xóa dữ liệu</div><div class="r-desc">Yêu cầu xóa toàn bộ tài khoản và dữ liệu liên quan</div></div>
+          <div class="right-item"><div class="r-title">Quyền hạn chế xử lý</div><div class="r-desc">Yêu cầu tạm dừng xử lý một số dữ liệu nhất định</div></div>
+          <div class="right-item"><div class="r-title">Quyền cung cấp dữ liệu</div><div class="r-desc">Nhận bản sao dữ liệu cá nhân của bạn ở định dạng có thể đọc được</div></div>
+          <div class="right-item"><div class="r-title">Quyền phản đối</div><div class="r-desc">Phản đối việc xử lý dữ liệu trong một số trường hợp</div></div>
+          <div class="right-item"><div class="r-title">Quyền rút lại đồng ý</div><div class="r-desc">Rút lại sự đồng ý bất cứ lúc nào mà không ảnh hưởng đến tính hợp pháp của xử lý trước đó</div></div>
+          <div class="right-item"><div class="r-title">Quyền khiếu nại</div><div class="r-desc">Khiếu nại đến chúng tôi hoặc cơ quan nhà nước có thẩm quyền</div></div>
+          <div class="right-item"><div class="r-title">Quyền bồi thường</div><div class="r-desc">Yêu cầu bồi thường thiệt hại khi có vi phạm gây ra thiệt hại thực tế</div></div>
+          <div class="right-item"><div class="r-title">Quyền tự bảo vệ</div><div class="r-desc">Áp dụng biện pháp tự bảo vệ theo quy định pháp luật</div></div>
+        </div>
+
+        <h3>Cách thực hiện quyền của bạn</h3>
+        <ul>
+          <li><strong>Chỉnh sửa tên hoặc ảnh:</strong> trực tiếp trong ứng dụng, mục Hồ sơ</li>
+          <li><strong>Xóa tài khoản, xuất dữ liệu hoặc các yêu cầu khác:</strong> gửi email đến <a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a> với tiêu đề <em>"Yêu cầu dữ liệu cá nhân — MathUp"</em></li>
+        </ul>
+        <p>Chúng tôi sẽ phản hồi trong vòng <strong>15 ngày làm việc</strong> kể từ ngày nhận yêu cầu hợp lệ.</p>
+      </div>
+
+      <div class="section" id="p10">
+        <div class="section-heading"><span class="section-num">10</span> Trẻ em và người chưa thành niên</div>
+        <p>MathUp Mobile là ứng dụng giáo dục phù hợp cho mọi lứa tuổi. Đối với người dùng dưới <strong>16 tuổi</strong>, cha mẹ hoặc người giám hộ hợp pháp có quyền:</p>
+        <ul>
+          <li>Quản lý, chỉnh sửa hoặc yêu cầu xóa tài khoản của trẻ;</li>
+          <li>Liên hệ chúng tôi để được hỗ trợ theo các quyền tại Mục 9.</li>
+        </ul>
+        <p>Chúng tôi không cố ý thu thập dữ liệu nhạy cảm của trẻ em ngoài những gì cần thiết để vận hành ứng dụng. Nếu bạn cho rằng chúng tôi đang lưu trữ dữ liệu của trẻ em không phù hợp, vui lòng liên hệ ngay.</p>
+      </div>
+
+      <div class="section" id="p11">
+        <div class="section-heading"><span class="section-num">11</span> Thay đổi chính sách bảo mật</div>
+        <p>Chúng tôi có thể cập nhật chính sách này khi có thay đổi về tính năng, pháp luật hoặc thực tiễn bảo mật.</p>
+        <ul>
+          <li>Ngày cập nhật sẽ được hiển thị ở đầu trang.</li>
+          <li>Thay đổi <strong>quan trọng</strong> sẽ được thông báo trong ứng dụng trước ít nhất <strong>7 ngày</strong>.</li>
+          <li>Việc tiếp tục sử dụng ứng dụng sau ngày có hiệu lực đồng nghĩa với việc chấp nhận chính sách mới.</li>
+          <li>Nếu không đồng ý, bạn có thể yêu cầu xóa tài khoản trước ngày có hiệu lực.</li>
+        </ul>
+      </div>
+
+      <div class="section" id="p12">
+        <div class="section-heading"><span class="section-num">12</span> Liên hệ và khiếu nại</div>
+        <p>Mọi câu hỏi, yêu cầu thực hiện quyền hoặc khiếu nại liên quan đến dữ liệu cá nhân, vui lòng liên hệ:</p>
+        <div class="contact-block">
+          <div class="cb-title">MathUp Mobile — Hỗ trợ dữ liệu cá nhân</div>
+          <div class="cb-row"><span class="cb-label">Email</span><span><a href="mailto:hoangpham100778@gmail.com">hoangpham100778@gmail.com</a></span></div>
+          <div class="cb-row"><span class="cb-label">Tiêu đề email</span><span>Yêu cầu dữ liệu cá nhân — MathUp</span></div>
+          <div class="cb-row"><span class="cb-label">Thời gian phản hồi</span><span>Tối đa 15 ngày làm việc</span></div>
+        </div>
+
+        <h3>Khiếu nại đến cơ quan nhà nước</h3>
+        <p>Nếu bạn cho rằng quyền của mình bị vi phạm và chúng tôi không giải quyết thỏa đáng, bạn có quyền khiếu nại đến <strong>Cục An toàn thông tin, Bộ Thông tin và Truyền thông</strong> hoặc cơ quan có thẩm quyền khác theo pháp luật Việt Nam.</p>
+      </div>
+
+    </div><!-- /#privacy -->
+
+  </main>
+</div><!-- /shell -->
 
 <footer>
-  <p>© 2026 MathUp Mobile. Được bảo vệ theo Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.</p>
-  <p style="margin-top:4px">Điều khoản Dịch vụ &amp; Chính sách Bảo mật — Phiên bản 1.0</p>
+  <div class="footer-inner">
+    <span class="footer-copy">Bản quyền © 2026 MathUp Mobile. Mọi quyền được bảo lưu.</span>
+    <div class="footer-links">
+      <a href="#terms">Điều khoản Dịch vụ</a>
+      <a href="#privacy">Chính sách Bảo mật</a>
+      <a href="mailto:hoangpham100778@gmail.com">Liên hệ</a>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:10px auto 0;font-size:11px;color:var(--gray-light)">
+    Được bảo vệ theo Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân · Phiên bản 1.0
+  </div>
 </footer>
+
+<script>
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.nav-group a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.nav-group a[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
 
 </body>
 </html>
